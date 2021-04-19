@@ -44,24 +44,35 @@ namespace ShellProject
             {
                 Console.Write(path + "> ");
                 input = Console.ReadLine();
-                Execute(input);
+                try
+                {
+                    Execute(input);
+                }
+                catch(Exception x)
+                {
+                    Console.WriteLine(x.Message);
+                }
+                
             } while (input != "exit");
         }
         public int Execute(string input)
         {
-            if (Commands.Exists(x => x.alias == input))
+            string[] inputs = input.Split(' ');
+            var arguments = input.Substring(inputs[0].Length+1);
+            if (Commands.Exists(x => x.alias == inputs[0]))
             {
                 var process = new Process();
                 process.StartInfo = new ProcessStartInfo(Commands.Find(x => x.alias == input).exePath)
                 {
-                    UseShellExecute = false
+                    UseShellExecute = false,
+                    Arguments = arguments
                 };
                 process.Start();
                 process.WaitForExit();
                 return 0;
             }
 
-            Console.WriteLine($"Command: {input} not founded");
+            Console.WriteLine($"Command:{input} not founded");
             return 1;
         }
     }

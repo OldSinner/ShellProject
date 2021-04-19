@@ -4,5 +4,8 @@ namespace ShellProject.Common
     {
         public string alias { get; set; }
         public string exePath { get; set; }
+        public string description { get; set; }
+        
+        
     }
 }

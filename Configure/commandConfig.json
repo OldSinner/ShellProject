@@ -1,14 +1,17 @@
 [
    {
       "alias": "dir",
-      "exePath": "/CommandsExe/dir.exe"
+      "exePath": "/CommandsExe/dir.exe",
+      "description":""
    },
    {
       "alias": "b",
-      "exePath": "b"
+      "exePath": "b",
+      "description":""
    },
    {
       "alias": "a",
-      "exePath": "a"
+      "exePath": "a",
+      "description":""
    }
 ]
