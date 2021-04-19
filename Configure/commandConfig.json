@@ -1,0 +1,14 @@
+[
+   {
+      "alias": "dir",
+      "exePath": "/CommandsExe/dir.exe"
+   },
+   {
+      "alias": "b",
+      "exePath": "b"
+   },
+   {
+      "alias": "a",
+      "exePath": "a"
+   }
+]
