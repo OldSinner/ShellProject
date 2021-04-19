@@ -48,21 +48,26 @@ namespace ShellProject
                 {
                     Execute(input);
                 }
-                catch(Exception x)
+                catch (Exception x)
                 {
                     Console.WriteLine(x.Message);
                 }
-                
+
             } while (input != "exit");
         }
         public int Execute(string input)
         {
+            string arguments = string.Empty;
             string[] inputs = input.Split(' ');
-            var arguments = input.Substring(inputs[0].Length+1);
+            if (inputs.Length > 1)
+            {
+                arguments = input.Substring(inputs[0].Length + 1);
+            }
+
             if (Commands.Exists(x => x.alias == inputs[0]))
             {
                 var process = new Process();
-                process.StartInfo = new ProcessStartInfo(Commands.Find(x => x.alias == input).exePath)
+                process.StartInfo = new ProcessStartInfo(Directory.GetCurrentDirectory()+Commands.Find(x => x.alias == inputs[0]).exePath)
                 {
                     UseShellExecute = false,
                     Arguments = arguments
