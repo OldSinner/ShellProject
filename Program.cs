@@ -6,7 +6,10 @@ namespace ShellProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var shell = new Shell();
+            shell.configure();
+            shell.Run();
         }
+
     }
 }
