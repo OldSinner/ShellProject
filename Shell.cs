@@ -57,6 +57,10 @@ namespace ShellProject
         }
         public int Execute(string input)
         {
+            if(String.IsNullOrWhiteSpace(input))
+            {
+                return 1;
+            }
             string arguments = string.Empty;
             string[] inputs = input.Split(' ');
             if (inputs.Length > 1)
@@ -70,7 +74,8 @@ namespace ShellProject
                 process.StartInfo = new ProcessStartInfo(Directory.GetCurrentDirectory()+Commands.Find(x => x.alias == inputs[0]).exePath)
                 {
                     UseShellExecute = false,
-                    Arguments = arguments
+                    Arguments = arguments,
+                    WorkingDirectory = path
                 };
                 process.Start();
                 process.WaitForExit();
