@@ -1,24 +1,29 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 
 namespace ShellProject
 {
     public class Shell
     {
         Dictionary<string, string> Commands = new Dictionary<string, string>();
-        string welcomeMessage;
-        public int configure()
+        string[] welcomeMessage;
+        public int Configure()
         {
+            welcomeMessage = File.ReadAllLines(Directory.GetCurrentDirectory()+"/Configure/WelcomeMessage.txt");
             return 1;
         }
         public void Run()
         {
             string input = null;
-
+            foreach(var line in welcomeMessage)
+            {
+                Console.WriteLine(line);
+            }
             do
             {
-                Console.Write("$ ");
+                Console.Write("$> ");
                 input = Console.ReadLine();
                 Execute(input);
             } while (input != "exit");
@@ -39,7 +44,7 @@ namespace ShellProject
                 return 0;
             }
 
-            Console.WriteLine($"{input} not found");
+            Console.WriteLine($"Command: {input} not founded");
             return 1;
         }
     }

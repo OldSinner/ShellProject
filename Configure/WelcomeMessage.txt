@@ -1,0 +1,7 @@
+Welcome to Simple C# Bash!
+Simple C# Bash it's a project which aims to imitate the behavior of real Shell on 
+operating systems using the High-level programming language c#
+Feel Free to Test!
+Created by OldSinner
+Last compilation: 00.00.0000
+
