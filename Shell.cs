@@ -11,13 +11,23 @@ namespace ShellProject
         string[] welcomeMessage;
         public int Configure()
         {
-            welcomeMessage = File.ReadAllLines(Directory.GetCurrentDirectory()+"/Configure/WelcomeMessage.txt");
-            return 1;
+            try
+            {
+                welcomeMessage = File.ReadAllLines(Directory.GetCurrentDirectory() + "/Configure/WelcomeMessage.txt");
+                return 0;
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x.Message);
+                Console.WriteLine("Error occured during Configure! Shell Cannot be used!");
+                return 1;
+            }
+
         }
         public void Run()
         {
             string input = null;
-            foreach(var line in welcomeMessage)
+            foreach (var line in welcomeMessage)
             {
                 Console.WriteLine(line);
             }

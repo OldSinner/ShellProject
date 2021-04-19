@@ -7,8 +7,11 @@ namespace ShellProject
         static void Main(string[] args)
         {
             var shell = new Shell();
-            shell.Configure();
-            shell.Run();
+            if(shell.Configure() == 0)
+            {
+                shell.Run();
+            }
+            
         }
 
     }
