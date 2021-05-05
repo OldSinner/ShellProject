@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ShellProject
+namespace shell
 {
     class Program
     {
@@ -13,6 +13,5 @@ namespace ShellProject
             }
             
         }
-
     }
 }

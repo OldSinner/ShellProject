@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using shell.Common;
 using Newtonsoft.Json;
-using ShellProject.Common;
 
-namespace ShellProject
+namespace shell
 {
     public class Shell
     {
@@ -79,6 +79,8 @@ namespace ShellProject
                 };
                 process.Start();
                 process.WaitForExit();
+                var x = process.StandardOutput.ReadToEnd();
+                Console.WriteLine(x);
                 return 0;
             }
 
