@@ -1,4 +1,4 @@
-namespace shell.Common
+namespace Shell.Common
 {
     public class Command
     {

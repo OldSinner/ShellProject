@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace shell
+namespace Shell
 {
     class Program
     {

@@ -4,10 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using shell.Common;
+using Shell.Common;
 using Newtonsoft.Json;
 
-namespace shell
+namespace Shell
 {
     public class Shell
     {
