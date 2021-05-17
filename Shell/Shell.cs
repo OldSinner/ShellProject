@@ -18,12 +18,16 @@ namespace Shell
         {
             try
             {
-
+                Console.WriteLine("Shell Starting...");
                 Env.path = Directory.GetCurrentDirectory();
+                Console.WriteLine("Load BuiltIn commands...");
                 var basicComand = new BuiltInCommand();
-                welcomeMessage = File.ReadAllLines(Directory.GetCurrentDirectory() + "/Configure/WelcomeMessage.txt");
-                var jsonConfigFile = File.ReadAllText(Directory.GetCurrentDirectory() + "/Configure/commandConfig.json");
+                
+                Console.WriteLine("Load external commands...");
+                var jsonConfigFile = File.ReadAllText(Env.path + "/Configure/commandConfig.json");
                 Commands = JsonConvert.DeserializeObject<List<Command>>(jsonConfigFile);
+                welcomeMessage = File.ReadAllLines(Env.path + "/Configure/WelcomeMessage.txt");
+                Console.Clear();
                 return 0;
             }
             catch (Exception x)
@@ -87,7 +91,7 @@ namespace Shell
                 }
                 else
                 {
-                    Console.WriteLine($"Command:{input} not founded");
+                    Console.WriteLine($"Command: {input} not founded");
                 }
             }
             return 1;

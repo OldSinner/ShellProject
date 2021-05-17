@@ -13,6 +13,8 @@ namespace Shell.Common
                 case "cd":
                     changeDirectory(args.Split(' '));
                     return true;
+                case "help":
+                    return true;
                 default:
                     return false;
             }
@@ -42,7 +44,7 @@ namespace Shell.Common
                 }
                 else
                 {
-                    tempPath = Path.Join(Env.path,args[0]);
+                    tempPath = Path.Join(Env.path, args[0]);
                 }
                 if (Directory.Exists(tempPath))
                 {
