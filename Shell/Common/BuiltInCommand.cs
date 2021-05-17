@@ -25,47 +25,49 @@ namespace Shell.Common
             int flag = 1;
             int maxarg = 1;
             string tempPath = "";
+            if(String.IsNullOrEmpty(args[0])) Array.Clear(args,0,args.Length);
             if (args.Length > maxarg || args.Length < minarg)
             {
                 Console.WriteLine($"Wrong Number of Arguments: Arguments Wanted: {minarg} - {maxarg}, get: {args.Length}");
             }
-            try
+            if (!String.IsNullOrEmpty(args[0]))    
             {
-                args[0].Replace('\\', '/');
-                if (args[0].Contains(':'))
+                try
                 {
-                    tempPath = args[0];
-                    flag = 0;
-                }
-                else if (args[0][0] == '/')
-                {
-                    var drive = Directory.GetDirectoryRoot(Env.path);
-                    tempPath = drive + args[0];
-                }
-                else
-                {
-                    tempPath = Path.Join(Env.path, args[0]);
-                }
-                if (Directory.Exists(tempPath))
-                {
-                    Env.path = Path.GetFullPath(tempPath);
-                }
-                else
-                {
-                    if (flag == 0)
-                        Console.WriteLine("Cannot find drive.");
+                    args[0].Replace('\\', '/');
+                    if (Path.IsPathRooted(args[0]))
+                    {
+                        tempPath = args[0];
+                        flag = 0;
+                    }
+                    else if (args[0][0] == '/')
+                    {
+                        var drive = Directory.GetDirectoryRoot(Env.path);
+                        tempPath = drive + args[0];
+                    }
                     else
                     {
-                        Console.WriteLine("Cannot find path " + tempPath);
+                        tempPath = Path.Join(Env.path, args[0]);
+                    }
+                    if (Directory.Exists(tempPath))
+                    {
+                        Env.path = Path.GetFullPath(tempPath);
+                    }
+                    else
+                    {
+                        if (flag == 0)
+                            Console.WriteLine("Cannot find drive.");
+                        else
+                        {
+                            Console.WriteLine("Cannot find path " + tempPath);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-
         }
     }
 }

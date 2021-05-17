@@ -16,6 +16,7 @@ namespace Shell
         string[] welcomeMessage;
         public int Configure()
         {
+            Console.Clear();
             try
             {
                 Console.WriteLine("Shell Starting...");
@@ -62,6 +63,7 @@ namespace Shell
         }
         public int Execute(string input)
         {
+            // Input conversion
             if (String.IsNullOrWhiteSpace(input))
             {
                 return 1;
@@ -72,6 +74,8 @@ namespace Shell
             {
                 arguments = input.Substring(inputs[0].Length + 1);
             }
+            inputs[0] = inputs[0].ToLower();
+            // Execute
             if (!basicComand.isCommand(inputs[0], arguments))
             {
                 if (Commands.Exists(x => x.alias == inputs[0]))
