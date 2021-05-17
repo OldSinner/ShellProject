@@ -12,14 +12,15 @@ namespace Shell
     public class Shell
     {
         List<Command> Commands = new List<Command>();
-        string path;
+        BuiltInCommand basicComand = new BuiltInCommand();
         string[] welcomeMessage;
         public int Configure()
         {
             try
             {
 
-                path = Directory.GetCurrentDirectory();
+                Env.path = Directory.GetCurrentDirectory();
+                var basicComand = new BuiltInCommand();
                 welcomeMessage = File.ReadAllLines(Directory.GetCurrentDirectory() + "/Configure/WelcomeMessage.txt");
                 var jsonConfigFile = File.ReadAllText(Directory.GetCurrentDirectory() + "/Configure/commandConfig.json");
                 Commands = JsonConvert.DeserializeObject<List<Command>>(jsonConfigFile);
@@ -42,7 +43,7 @@ namespace Shell
             }
             do
             {
-                Console.Write(path + "> ");
+                Console.Write(Env.path + "> ");
                 input = Console.ReadLine();
                 try
                 {
@@ -57,7 +58,7 @@ namespace Shell
         }
         public int Execute(string input)
         {
-            if(String.IsNullOrWhiteSpace(input))
+            if (String.IsNullOrWhiteSpace(input))
             {
                 return 1;
             }
@@ -67,24 +68,28 @@ namespace Shell
             {
                 arguments = input.Substring(inputs[0].Length + 1);
             }
-
-            if (Commands.Exists(x => x.alias == inputs[0]))
+            if (!basicComand.isCommand(inputs[0], arguments))
             {
-                var process = new Process();
-                process.StartInfo = new ProcessStartInfo(Directory.GetCurrentDirectory()+Commands.Find(x => x.alias == inputs[0]).exePath)
+                if (Commands.Exists(x => x.alias == inputs[0]))
                 {
-                    UseShellExecute = false,
-                    Arguments = arguments,
-                    WorkingDirectory = path
-                };
-                process.Start();
-                process.WaitForExit();
-                var x = process.StandardOutput.ReadToEnd();
-                Console.WriteLine(x);
-                return 0;
+                    var process = new Process();
+                    string processPath = Commands.Find(x => x.alias == inputs[0]).exePath;
+                    if (processPath[0] == '.') processPath = Directory.GetCurrentDirectory() + processPath.Substring(1);
+                    process.StartInfo = new ProcessStartInfo(processPath)
+                    {
+                        UseShellExecute = false,
+                        Arguments = arguments,
+                        WorkingDirectory = Env.path
+                    };
+                    process.Start();
+                    process.WaitForExit();
+                    return 0;
+                }
+                else
+                {
+                    Console.WriteLine($"Command:{input} not founded");
+                }
             }
-
-            Console.WriteLine($"Command:{input} not founded");
             return 1;
         }
     }

@@ -1,12 +1,12 @@
 [
    {
       "alias": "dir",
-      "exePath": "/CommandsExe/dir.exe",
+      "exePath": "./CommandsExe/dir.exe",
       "description":""
    },
    {
-      "alias": "b",
-      "exePath": "b",
+      "alias": "dotnet",
+      "exePath": "C:/Program Files/dotnet/dotnet.exe",
       "description":""
    },
    {
