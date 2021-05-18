@@ -12,7 +12,7 @@ namespace Shell
     public class Shell
     {
         List<Command> Commands = new List<Command>();
-        BuiltInCommand basicComand = new BuiltInCommand();
+        BuiltInCommand basicComannd;
         string[] welcomeMessage;
         public int Configure()
         {
@@ -21,13 +21,12 @@ namespace Shell
             {
                 Console.WriteLine("Shell Starting...");
                 Env.path = Directory.GetCurrentDirectory();
-                Console.WriteLine("Load BuiltIn commands...");
-                var basicComand = new BuiltInCommand();
-                
                 Console.WriteLine("Load external commands...");
                 var jsonConfigFile = File.ReadAllText(Env.path + "/Configure/commandConfig.json");
                 Commands = JsonConvert.DeserializeObject<List<Command>>(jsonConfigFile);
                 welcomeMessage = File.ReadAllLines(Env.path + "/Configure/WelcomeMessage.txt");
+                Console.WriteLine("Load Built in commands...");
+                basicComannd = new BuiltInCommand(Commands);
                 Console.Clear();
                 return 0;
             }
@@ -76,7 +75,7 @@ namespace Shell
             }
             inputs[0] = inputs[0].ToLower();
             // Execute
-            if (!basicComand.isCommand(inputs[0], arguments))
+            if (!basicComannd.isCommand(inputs[0], arguments))
             {
                 if (Commands.Exists(x => x.alias == inputs[0]))
                 {

@@ -1,23 +1,56 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Shell.Common
 {
     public class BuiltInCommand
     {
-
+        Dictionary<string, string> builtCommand = new Dictionary<string, string>();
+        List<Command> Commands = new List<Command>();
+        public BuiltInCommand(List<Command> Commands)
+        {
+            builtCommand.Add("cd", "Use the cd command to move from your present directory to another directory.\n Syntax: \n" +
+            "cd <path> \n\n Example: \n cd windows \n cd C:/Windows \n cd ..");
+            
+            this.Commands = Commands;
+        }
         public bool isCommand(string command, string args)
         {
             switch (command)
             {
+                case "help":
+                    help(args.Split(' '));
+                    return true;
                 case "cd":
                     changeDirectory(args.Split(' '));
                     return true;
-                case "help":
-                    return true;
+
                 default:
                     return false;
             }
+        }
+        public void help(string[] args)
+        {
+            int minarg = 0;
+            int maxarg = 1;
+            if (args.Length > maxarg || args.Length < minarg)
+            {
+                Console.WriteLine($"Wrong Number of Arguments: Arguments Wanted: {minarg} - {maxarg}, get: {args.Length}");
+            }
+            Console.WriteLine("List of built in Commands:");
+            foreach(var command in builtCommand)
+            {
+                Console.WriteLine(command.Key + "\n---------\n"+ command.Value);
+                Console.WriteLine("\n\n");
+            }
+            Console.WriteLine("List of external Commands:");
+            foreach(var command in Commands)
+            {
+                Console.WriteLine(command.alias + "\n---------\n"+ command.description);
+                Console.WriteLine("");
+            }
+
         }
         public void changeDirectory(string[] args)
         {
@@ -25,12 +58,11 @@ namespace Shell.Common
             int flag = 1;
             int maxarg = 1;
             string tempPath = "";
-            if(String.IsNullOrEmpty(args[0])) Array.Clear(args,0,args.Length);
             if (args.Length > maxarg || args.Length < minarg)
             {
                 Console.WriteLine($"Wrong Number of Arguments: Arguments Wanted: {minarg} - {maxarg}, get: {args.Length}");
             }
-            if (!String.IsNullOrEmpty(args[0]))    
+            if (!String.IsNullOrEmpty(args[0]))
             {
                 try
                 {
@@ -69,5 +101,6 @@ namespace Shell.Common
                 }
             }
         }
+
     }
 }
