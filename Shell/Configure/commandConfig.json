@@ -2,7 +2,7 @@
    {
       "alias": "dir",
       "exePath": "./CommandsExe/dir.exe",
-      "description":""
+      "description":"Use the command to list all directory and files in path.\n Syntax: \n dir <path> \n\n Example: \n dir windows \n dir C:/Windows"
    },
    {
       "alias": "dotnet",

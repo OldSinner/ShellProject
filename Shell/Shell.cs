@@ -77,7 +77,7 @@ namespace Shell
             // Execute
             if (!basicComannd.isCommand(inputs[0], arguments))
             {
-                if (Commands.Exists(x => x.alias == inputs[0]))
+                if (Commands.Exists(x => x.alias == inputs[0]) || File.Exists(Path.Join(Env.path,inputs[0])))
                 {
                     var process = new Process();
                     string processPath = Commands.Find(x => x.alias == inputs[0]).exePath;
@@ -94,7 +94,7 @@ namespace Shell
                 }
                 else
                 {
-                    Console.WriteLine($"Command: {input} not founded");
+                    Console.WriteLine($"Command: {input} is not recognized as the name of a cmdlet, function, script file, or operable program.");
                 }
             }
             return 1;
