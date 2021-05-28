@@ -1,1 +1,1 @@
-It's cute Shell, made in .Net 
+A console application that aims to be a shell. Made in .Net
